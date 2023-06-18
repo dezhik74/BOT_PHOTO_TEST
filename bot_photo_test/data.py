@@ -38,36 +38,36 @@ class Address:
             return None
 
 objects = [
-    Address('address1', [
-        AddressWork('work1', [
-            Flat('flat1'),
-            Flat('flat2'),
-            Flat('flat3'),
-            Flat('flat4'),
+    Address('Шотмана 16 к1', [
+        AddressWork('ГВС', [
+            Flat('Квартира 1'),
+            Flat('Квартира 2'),
+            Flat('Квартира 3'),
+            Flat('Квартира 4'),
         ]),
-        AddressWork('work2', [
-            Flat('flat1'),
-            Flat('flat2'),
-            Flat('flat3'),
-            Flat('flat4'),
+        AddressWork('ХВС', [
+            Flat('Квартира 1'),
+            Flat('Квартира 2'),
+            Flat('Квартира 3'),
+            Flat('Квартира 4'),
         ]),
     ]),
-    Address('address2', [
-        AddressWork('work1', [
-            Flat('flat1'),
-            Flat('flat2'),
-            Flat('flat3'),
-            Flat('flat4'),
-            Flat('flat5'),
-            Flat('flat6'),
+    Address('Большевиков 25 к2', [
+        AddressWork('ХВС', [
+            Flat('Квартира 1'),
+            Flat('Квартира 2'),
+            Flat('Квартира 3'),
+            Flat('Квартира 4'),
+            Flat('Квартира 5'),
+            Flat('Квартира 6'),
         ]),
-        AddressWork('work2', [
-            Flat('flat1'),
-            Flat('flat2'),
-            Flat('flat3'),
-            Flat('flat4'),
-            Flat('flat5'),
-            Flat('flat6'),
+        AddressWork('ТС', [
+            Flat('Квартира 1'),
+            Flat('Квартира 2'),
+            Flat('Квартира 3'),
+            Flat('Квартира 4'),
+            Flat('Квартира 5'),
+            Flat('Квартира 6'),
         ]),
     ]),
 ]

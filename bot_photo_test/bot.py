@@ -6,7 +6,7 @@ from aiogram.utils import executor
 
 from bot_photo_test import settings
 from bot_photo_test.data import objects
-from bot_photo_test.keyboards import root_keyboard, address_keyboard, work_keyboard
+from bot_photo_test.keyboards import root_keyboard, address_keyboard, work_keyboard, flat_keyboard
 
 bot = Bot(token=settings.TELEGA_TOKEN)
 dp = Dispatcher(bot)
@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 
 @dp.message_handler(commands=['start', 's'])
 async def send_welcome(message: types.Message):
-    await message.reply(f"Объекты", parse_mode='HTML', reply_markup=root_keyboard(objects))
+    await message.answer(f"Объекты", parse_mode='HTML', reply_markup=root_keyboard(objects))
     # for obj in objects:
     #     print(f"{obj.address} [pk={obj.pk}]")
     #     for w in obj.works:
@@ -27,21 +27,23 @@ async def send_welcome(message: types.Message):
 
 @dp.callback_query_handler(lambda c: c.data == "root")
 async def process_callback_root(callback_query: types.CallbackQuery):
-    await bot.send_message(
-        callback_query.from_user.id,
-        f"Объекты",
-        parse_mode='HTML',
+    await bot.edit_message_text(
+        "Объекты",
+        callback_query.message.chat.id,
+        callback_query.message.message_id,
         reply_markup=root_keyboard(objects)
     )
+    await bot.answer_callback_query(callback_query.id)
 
 
 @dp.callback_query_handler(lambda c: c.data and c.data.startswith('obj'))
 async def process_callback_address(callback_query: types.CallbackQuery):
     idx = int(callback_query.data.split('-')[1])
     address = objects[idx]
-    await bot.send_message(
-        callback_query.from_user.id,
+    await bot.edit_message_text(
         f"Адрес: {address.address}",
+        callback_query.message.chat.id,
+        callback_query.message.message_id,
         reply_markup=address_keyboard(address)
     )
     await bot.answer_callback_query(callback_query.id)
@@ -52,9 +54,10 @@ async def process_callback_address_work(callback_query: types.CallbackQuery):
     address = objects[addr_idx]
     work_idx = int(callback_query.data.split('-')[1])
     work = address.works[work_idx]
-    await bot.send_message(
-        callback_query.from_user.id,
+    await bot.edit_message_text(
         f"Адрес: {address.address}. Работа {work.work}",
+        callback_query.message.chat.id,
+        callback_query.message.message_id,
         reply_markup=work_keyboard(work)
     )
     await bot.answer_callback_query(callback_query.id)
@@ -67,16 +70,18 @@ async def process_callback_work(callback_query: types.CallbackQuery):
     work = address.works[work_idx]
     flat_idx = int(callback_query.data.split('-')[1])
     flat = work.flats[flat_idx]
-    await bot.send_message(
-        callback_query.from_user.id,
-        f"Адрес: {address.address}. Работа {work.work}. Квартира {flat.name}"
+    await bot.edit_message_text(
+        f"Адрес: {address.address}. Работа {work.work}. Квартира {flat.name}",
+        callback_query.message.chat.id,
+        callback_query.message.message_id,
+        reply_markup=flat_keyboard(flat)
     )
     await bot.answer_callback_query(callback_query.id)
 
 
-@dp.message_handler()
-async def text_handler(message: types.Message):
-    await message.reply(message.text)
+# @dp.message_handler()
+# async def text_handler(message: types.Message):
+#     await message.reply(message.text)
 
 
 if __name__ == '__main__':
