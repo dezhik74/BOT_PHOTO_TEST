@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "bot-photo-test"
+version = "0.1.0"
+description = ""
+authors = ["Serje <dezhik@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "bot_photo_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+aiogram = "^2.25.1"
+python-decouple = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
